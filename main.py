@@ -1,4 +1,4 @@
-from csv_reader import get_headers, stream_csv
+from csv_reader import get_headers, stream_csv, validate_csv
 from schema_handler import assign_schema
 from sql_generator import generate_sql
 
@@ -10,10 +10,23 @@ from sql_generator import generate_sql
 # 5) Generate SQL table insert command with parsed .csv file and print into console.
 # Ready, break!
 
-filepath = input("Enter .csv file path: ")
+while True:
+    filepath = input("Enter .csv file path: ")
+
+    try:
+        validate_csv(filepath)
+        break
+    except FileNotFoundError:
+        print("File not found, please enter a valid file path.\n")
+    except EOFError:
+        print("File is empty, please enter the path of a valid file.\n")
+    except ValueError as error:
+        print(error)
+        print("Please enter the path of a valid file.\n")
+
 headers = get_headers(filepath)
 schema = assign_schema(headers)
+csv_stream = stream_csv(filepath)
 
 table_name = input("\nEnter SQL table name: ")
-csv_stream = stream_csv(filepath)
 generate_sql(csv_stream, schema, table_name)
