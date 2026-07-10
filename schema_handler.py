@@ -9,11 +9,11 @@ def assign_schema(headers):
 
             selection = input("> ").strip()
             if selection == "1":
-                schema[header] = "Quoted"
+                schema[header] = "quoted"
                 print(f"\n\"{header}\" values will be entered as 'quoted' text.")
                 break
             elif selection == "2":
-                schema[header] = "Plain"
+                schema[header] = "plain"
                 print(f"\n\"{header}\" values will be entered as plain text.")
                 break
             else:

@@ -1,5 +1,6 @@
-from csv_reader import get_headers
+from csv_reader import get_headers, stream_csv
 from schema_handler import assign_schema
+from sql_generator import generate_sql
 
 # Game Plan:
 # 1) Prompt user for .csv file path and data type of each header.
@@ -13,4 +14,6 @@ filepath = input("Enter .csv file path: ")
 headers = get_headers(filepath)
 schema = assign_schema(headers)
 
-print(schema)
+table_name = input("\nEnter SQL table name: ")
+csv_stream = stream_csv(filepath)
+generate_sql(csv_stream, schema, table_name)
